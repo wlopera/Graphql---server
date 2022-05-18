@@ -28,7 +28,17 @@ Uso de Graphql server: Querys, mutation, type...
         }
     }
 ```   
+### Graphql
+```
+Este paquete proporciona lógica para analizar consultas de GraphQL.
+```
 
+### Apollo/client
+```
+Este paquete único contiene prácticamente todo lo que necesita para configurar Apollo Client. Incluye caché en memoria, 
+administración de estado local, manejo de errores y una capa de vista basada en React.
+```
+   
 ## Librerias
  * "apollo-server": "^3.7.0",
  * "graphql": "^16.5.0",
