@@ -31,6 +31,11 @@ const persons = [
 //Describir los datos
 //const typeDefs = gql`
 const typeDefinitions = gql`
+  enum YesNo {
+    YES
+    NO
+  }
+
   type Address {
     street: String!
     city: String!
@@ -48,7 +53,7 @@ const typeDefinitions = gql`
 
   type Query {
     personCount: Int!
-    allPersons: [Person]!
+    allPersons(phone: YesNo): [Person]!
     findPerson(name: String!): Person
   }
 
@@ -60,6 +65,8 @@ const typeDefinitions = gql`
       street: String!
       city: String!
     ): Person
+
+    editPhone(name: String!, phone: String!): Person
   }
 `;
 
@@ -67,7 +74,17 @@ const typeDefinitions = gql`
 const resolvers = {
   Query: {
     personCount: () => persons.length,
-    allPersons: () => persons,
+
+    allPersons: (root, args) => {
+      if (!args.phone) {
+        return persons;
+      }
+
+      return persons.filter((person) =>
+        args.phone === "YES" ? person.phone : !person.phone
+      );
+    },
+
     findPerson: (root, args) => {
       const { name } = args;
       return persons.find((person) => person.name === name);
@@ -86,6 +103,18 @@ const resolvers = {
       const person = { ...args, id: uuid() };
       persons.push(person);
       return person;
+    },
+
+    editPhone: (root, args) => {
+      const personIndex = persons.findIndex((per) => per.name === args.name);
+
+      if (!personIndex === -1) return null;
+
+      const person = persons[personIndex];
+      const updatePerson = { ...person, phone: args.phone };
+      person[personIndex] = updatePerson;
+
+      return updatePerson;
     },
   },
 
