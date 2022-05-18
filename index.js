@@ -1,36 +1,39 @@
 import { ApolloServer, gql, UserInputError } from "apollo-server";
+import axios from "axios";
 import { v1 as uuid } from "uuid";
 
 // Data proveniente de DUMMY - REST Api - Microservicio - BD
-const persons = [
-  {
-    age: "10",
-    name: "William",
-    phone: "502-457845",
-    street: "Ciudad de Panamá",
-    city: "Panamá",
-    id: "3d594650-m1",
-  },
-  {
-    age: "20",
-    name: "Andrés",
-    phone: "549-4287652",
-    street: "Buenos Aires",
-    city: "Argentina",
-    id: "3d594470-m2",
-  },
-  {
-    age: "27",
-    name: "Carlos",
-    street: "El Paramo",
-    city: "Chile",
-    id: "3d594875-m3",
-  },
-];
+// const persons = [
+//   {
+//     age: "10",
+//     name: "William",
+//     phone: "502-457845",
+//     street: "Ciudad de Panamá",
+//     city: "Panamá",
+//     id: "3d594650-m1",
+//   },
+//   {
+//     age: "20",
+//     name: "Andrés",
+//     phone: "549-4287652",
+//     street: "Buenos Aires",
+//     city: "Argentina",
+//     id: "3d594470-m2",
+//   },
+//   {
+//     age: "27",
+//     name: "Carlos",
+//     street: "El Paramo",
+//     city: "Chile",
+//     id: "3d594875-m3",
+//   },
+// ];
+
+// Data proveniente de REST Api (json server)
+const { data: persons } = await axios.get("http://localhost:3000/persons");
 
 //Describir los datos
-//const typeDefs = gql`
-const typeDefinitions = gql`
+const typeDefs = gql`
   enum YesNo {
     YES
     NO
@@ -75,7 +78,7 @@ const resolvers = {
   Query: {
     personCount: () => persons.length,
 
-    allPersons: (root, args) => {
+    allPersons: async (root, args) => {
       if (!args.phone) {
         return persons;
       }
@@ -119,10 +122,6 @@ const resolvers = {
   },
 
   Person: {
-    // address: (root) => {
-    //   console.log("root-address:", root);
-    //   return `${root.street}-${root.city}`;
-    // },
     address: (root) => {
       return {
         street: root.street,
@@ -136,7 +135,7 @@ const resolvers = {
 
 // Crear Servidor
 const server = new ApolloServer({
-  typeDefs: typeDefinitions,
+  typeDefs,
   resolvers,
 });
 
