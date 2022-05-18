@@ -177,6 +177,42 @@ Servidor listo en http://localhost:4000/
 ## 3 Manejo de errores
 ![Captura4](https://user-images.githubusercontent.com/7141537/169056324-2facfe5a-8c9f-48ce-af5a-7789d62eab13.PNG)
 
+## Uso de ENUM: Modificar index.js
+
+```diff
+...
++ const typeDefinitions = gql`
++  enum YesNo {
++    YES
++    NO
++  }
+...
+
+...
+const resolvers = {
+  Query: {
+    personCount: () => persons.length,
+
++    allPersons: (root, args) => {
++      if (!args.phone) {
++        return persons;
++      }
+
++      return persons.filter((person) =>
++        args.phone === "YES" ? person.phone : !person.phone
++      );
++    },
+
+    findPerson: (root, args) => {
+      const { name } = args;
+      return persons.find((person) => person.name === name);
+    },
+  },
+...
+```
+![Captura](https://user-images.githubusercontent.com/7141537/169082496-052e1dc7-7d80-4e3a-9750-0ce750458520.PNG)
+![Captura1](https://user-images.githubusercontent.com/7141537/169082487-63a41327-6d9d-4369-873d-13775e146f76.PNG)
+![Captura2](https://user-images.githubusercontent.com/7141537/169082493-b9ea5729-52a3-489f-a162-720f1677f9d4.PNG)
 
 
 
