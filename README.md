@@ -55,6 +55,19 @@ administración de estado local, manejo de errores y una capa de vista basada en
     Home
         http://localhost:3000
 
+## Crear Servidor Graphql
+ - Crear carpeta > mkdir graphql-Server
+ - Entrar en carpeta creada > cd graphql-Server
+ - Inicializar el proyecto > npm init -y 
+ - Instalar apolo/server y graphwl 
+    graphql-Server> npm i apollo-server graphql
+ - Abrir proyecto. En mi caso VSCode
+ - Agregar "type": "module" en package.json (permite usar packages y no es necesario usar require(...) )
+ - Crear codigo: src/index.js
+ - Levantar servidor > node index.js
+ - Correr aplicativo
+      http://localhost:4000 => https://studio.apollographql.com/sandbox/explorer (Grphql Playground)
+      
 ### Configurar pacakge.json
 ```diff
 ...
@@ -71,7 +84,7 @@ administración de estado local, manejo de errores y una capa de vista basada en
  * "graphql": "^16.5.0",
  * "nodemon": "^2.0.16",
  * "uuid": "^8.3.2"  
-
+      
 ## index.js
 ```
 import { ApolloServer, gql, UserInputError } from "apollo-server";
