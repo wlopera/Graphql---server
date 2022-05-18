@@ -38,6 +38,33 @@ Este paquete proporciona lógica para analizar consultas de GraphQL.
 Este paquete único contiene prácticamente todo lo que necesita para configurar Apollo Client. Incluye caché en memoria, 
 administración de estado local, manejo de errores y una capa de vista basada en React.
 ```
+
+### Json Server: npm i json-server
+- Obtenga una API REST falsa completa sin codificación en menos de 30 segundos (en serio) 
+  Para desarrollado front-end que necesitan un back-end rápido para crear prototipos y simulacros.
+
+    Agregar script en package.json
+     >  "json-server": "json-server --watch db.json"
+
+    Levantar Servidor Rest API
+    > npm run json-start
+
+    Resources
+        http://localhost:3000/persons
+
+    Home
+        http://localhost:3000
+
+### Configurar pacakge.json
+```diff
+...
++ "scripts": {
++    "json-server": "json-server --watch db.json",
++    "test": "echo \"Error: no test specified\" && exit 1",
++    "dev": "nodemon index.js"
++  }
+...
+```  
    
 ## Librerias
  * "apollo-server": "^3.7.0",
