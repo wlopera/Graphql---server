@@ -35,6 +35,7 @@ const typeDefinitions = gql`
     YES
     NO
   }
+
   type Address {
     street: String!
     city: String!
@@ -64,6 +65,8 @@ const typeDefinitions = gql`
       street: String!
       city: String!
     ): Person
+
+    editPhone(name: String!, phone: String!): Person
   }
 `;
 
@@ -100,6 +103,18 @@ const resolvers = {
       const person = { ...args, id: uuid() };
       persons.push(person);
       return person;
+    },
+
+    editPhone: (root, args) => {
+      const personIndex = persons.findIndex((per) => per.name === args.name);
+
+      if (!personIndex === -1) return null;
+
+      const person = persons[personIndex];
+      const updatePerson = { ...person, phone: args.phone };
+      person[personIndex] = updatePerson;
+
+      return updatePerson;
     },
   },
 
