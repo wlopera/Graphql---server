@@ -274,4 +274,9 @@ const resolvers = {
 ![Captura](https://user-images.githubusercontent.com/7141537/169097401-c3d3ab0c-7336-4cc0-a33d-ed7be76ef20e.PNG)
 ![Captura1](https://user-images.githubusercontent.com/7141537/169097398-b9826fad-aecf-4ec1-82d0-3a02a2e19142.PNG)
 
+## Consultas anidadas 
+ * Realizar la misma consulta con parametros diferentes
+ * ![Captura](https://user-images.githubusercontent.com/7141537/169099055-55c36500-3686-4d42-983f-aca789be9598.PNG)
 
+ 
+ 
