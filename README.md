@@ -214,6 +214,64 @@ const resolvers = {
 ![Captura1](https://user-images.githubusercontent.com/7141537/169082487-63a41327-6d9d-4369-873d-13775e146f76.PNG)
 ![Captura2](https://user-images.githubusercontent.com/7141537/169082493-b9ea5729-52a3-489f-a162-720f1677f9d4.PNG)
 
+## Modificar el número de teléfono - index.js
+```diff
+const typeDefinitions = gql`
+  enum YesNo {
+    YES
+    NO
+  }
 
+  ....
+  
+  type Mutation {
+    addPerson(
+      age: String!
+      name: String!
+      phone: String
+      street: String!
+      city: String!
+    ): Person
+
++  editPhone(name: String!, phone: String!): Person
+  }
+  ....
+`;
+```
+```diff
+const resolvers = {
+  ...
+  
+  Mutation: {
+    addPerson: (root, args) => {
+      if (persons.find((per) => per.name === args.name)) {
+        //throw new Error("Este Nombre ya esta registrado!");
+
+        throw new UserInputError("Campo debe ser único", {
+          invalidArgs: args.name,
+        });
+      }
+      const person = { ...args, id: uuid() };
+      persons.push(person);
+      return person;
+    },
+
++    editPhone: (root, args) => {
++      const personIndex = persons.findIndex((per) => per.name === args.name);
+
++      if (!personIndex === -1) return null;
+
++      const person = persons[personIndex];
++      const updatePerson = { ...person, phone: args.phone };
++      person[personIndex] = updatePerson;
+
++      return updatePerson;
++    },
+  },
+  ...
+
+```
+![Captura](https://user-images.githubusercontent.com/7141537/169097401-c3d3ab0c-7336-4cc0-a33d-ed7be76ef20e.PNG)
+![Captura1](https://user-images.githubusercontent.com/7141537/169097398-b9826fad-aecf-4ec1-82d0-3a02a2e19142.PNG)
 
 
